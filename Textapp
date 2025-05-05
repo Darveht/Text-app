@@ -71,6 +71,7 @@
             flex: 1;
             overflow-y: auto;
             padding-bottom: 60px;
+            padding-top: 50px;
         }
 
         /* Feed tabs */
@@ -78,9 +79,54 @@
             display: flex;
             border-bottom: 1px solid var(--gray-light);
             background-color: white;
-            position: sticky;
+            position: fixed;
             top: 53px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 5;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        /* Like animation */
+        @keyframes likeAnimation {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(0.95); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .liked {
+            color: var(--primary) !important;
+            animation: likeAnimation 0.5s ease-in-out;
+        }
+
+        .action i.fa-heart {
+            transition: color 0.2s ease;
+        }
+
+        .action:hover i.fa-heart {
+            transform: scale(1.1);
+        }
+
+            /* Save animation */
+        @keyframes saveAnimation {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        .save-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--primary);
+            font-size: 50px;
+            pointer-events: none;
+            animation: saveAnimation 0.8s ease-out forwards;
+            z-index: 1000;
         }
 
         .tab {
@@ -607,6 +653,47 @@
     </div>
 
     <script>
+        // Función para manejar likes
+        function handleLike(heartIcon) {
+            heartIcon.classList.toggle('liked');
+            const countSpan = heartIcon.parentElement.querySelector('span');
+            const currentCount = parseInt(countSpan.textContent);
+            
+            if (heartIcon.classList.contains('liked')) {
+                countSpan.textContent = currentCount + 1;
+            } else {
+                countSpan.textContent = currentCount - 1;
+            }
+        }
+
+        // Agregar click listener a todos los botones de like
+        document.querySelectorAll('.fa-heart').forEach(heart => {
+            heart.parentElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleLike(heart);
+            });
+        });
+
+        // Función para mostrar animación de guardado
+        function showSaveAnimation() {
+            const animationEl = document.createElement('div');
+            animationEl.className = 'save-animation';
+            animationEl.innerHTML = '<i class="fas fa-bookmark"></i>';
+            document.body.appendChild(animationEl);
+            
+            setTimeout(() => {
+                animationEl.remove();
+            }, 800);
+        }
+
+        // Agregar click listener a todos los botones de guardar
+        document.querySelectorAll('.fa-bookmark').forEach(bookmark => {
+            bookmark.parentElement.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSaveAnimation();
+            });
+        });
+
         // Simple navigation handling
         document.getElementById('home-nav').addEventListener('click', function() {
             document.getElementById('main-content').style.display = 'block';
