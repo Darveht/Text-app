@@ -7,11 +7,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <style>
         :root {
-            --primary: #FF4C68;
-            --dark: #121212;
-            --light: #fafafa;
-            --gray: #8e8e8e;
-            --gray-light: #f0f0f0;
+            --primary: #1877F2;
+            --dark: #1c1e21;
+            --light: #f0f2f5;
+            --gray: #65676b;
+            --gray-light: #e4e6eb;
         }
 
         * {
@@ -42,16 +42,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
+            padding: 8px 15px;
             border-bottom: 1px solid var(--gray-light);
             position: sticky;
             top: 0;
             background-color: white;
             z-index: 10;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .logo {
-            font-size: 22px;
+            font-size: 28px;
             font-weight: bold;
             color: var(--primary);
         }
@@ -146,7 +147,10 @@
         /* Posts */
         .post {
             padding: 15px;
-            border-bottom: 1px solid var(--gray-light);
+            border-radius: 8px;
+            background: white;
+            margin: 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
             position: relative;
         }
 
@@ -197,15 +201,27 @@
 
         .action {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            font-size: 12px;
+            justify-content: center;
+            font-size: 14px;
             color: var(--gray);
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+
+        .action:hover {
+            background-color: var(--light);
         }
 
         .action i {
             font-size: 18px;
-            margin-bottom: 2px;
+            margin-right: 6px;
+        }
+
+        .action.liked i {
+            color: var(--primary);
         }
 
         /* Bottom navigation */
