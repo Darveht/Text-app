@@ -551,7 +551,10 @@
         <!-- Profile Section -->
         <div class="profile-section" id="profile-section">
             <div class="profile-header">
-                <img src="/api/placeholder/200/200" alt="Profile" class="profile-avatar">
+                <label for="profile-upload" style="cursor: pointer;">
+                    <img src="/api/placeholder/200/200" alt="Profile" class="profile-avatar" id="profile-preview">
+                </label>
+                <input type="file" id="profile-upload" accept="image/*" style="display: none;">
                 <div class="profile-name">Tu Nombre</div>
                 <div class="profile-handle">@usuario</div>
                 <div class="profile-bio">Aquí puedes escribir tu biografía. Cuenta algo sobre ti, tus intereses, pasiones o simplemente una frase que te defina.</div>
@@ -731,6 +734,18 @@
                 item.classList.remove('active');
             });
             this.classList.add('active');
+        });
+
+        // Handle profile picture upload
+        document.getElementById('profile-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-preview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
         });
 
         // Toggle between feed tabs
