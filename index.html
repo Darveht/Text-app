@@ -352,15 +352,7 @@
             animation: saveSuccess 1.5s ease-in-out;
         }
 
-        .edit-profile-btn {
-            background-color: var(--gray-light);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-        }
+        
 
         /* Search Section */
         .search-section {
@@ -571,7 +563,7 @@
                 <div class="save-feedback" style="display: none; color: var(--primary); font-size: 14px; margin-top: 5px;">
                     <i class="fas fa-check"></i> Guardado
                 </div>
-                <div class="profile-bio">Aquí puedes escribir tu biografía. Cuenta algo sobre ti, tus intereses, pasiones o simplemente una frase que te defina.</div>
+                <div class="profile-bio" id="profile-bio" style="cursor: pointer;">Aquí puedes escribir tu biografía. Cuenta algo sobre ti, tus intereses, pasiones o simplemente una frase que te defina.</div>
                 <div class="profile-stats">
                     <div class="stat">
                         <div class="stat-value">125</div>
@@ -586,7 +578,6 @@
                         <div class="stat-label">Notas</div>
                     </div>
                 </div>
-                <button class="edit-profile-btn">Editar perfil</button>
             </div>
             
             <!-- User Posts -->
@@ -604,6 +595,10 @@
                             <div class="action">
                                 <i class="fas fa-comment"></i>
                                 <span>24</span>
+                            </div>
+                            <div class="action delete-note" style="color: #ff4444;">
+                                <i class="fas fa-trash"></i>
+                                <span>Eliminar</span>
                             </div>
                         </div>
                     </div>
@@ -793,6 +788,19 @@
 
         document.getElementById('profile-handle').addEventListener('click', function() {
             makeEditable(this);
+        });
+
+        document.getElementById('profile-bio').addEventListener('click', function() {
+            makeEditable(this);
+        });
+
+        // Handle note deletion
+        document.querySelectorAll('.delete-note').forEach(deleteBtn => {
+            deleteBtn.addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que quieres eliminar esta nota?')) {
+                    this.closest('.post').remove();
+                }
+            });
         });
 
         // Toggle between feed tabs
